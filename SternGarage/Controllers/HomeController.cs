@@ -1,19 +1,41 @@
-using System.Diagnostics;
+using MercedesBlog.Models;
+using MercedesBlog.Services.Contracts;
+using MercedesBlog.ViewModels;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using SternGarage.Models;
+using System.Diagnostics;
 
-namespace SternGarage.Controllers
+namespace MercedesBlog.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ICarService _carService;
+        private readonly IReviewService _reviewService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ICarService carService, IReviewService reviewService)
         {
-            _logger = logger;
+            _carService = carService;
+            _reviewService = reviewService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
+        {
+            var viewModel = new HomeViewModel
+            {
+                LatestCars = await _carService.GetAllCarsAsync(null, null, null),
+                LatestReviews = await _reviewService.GetLatestReviewsAsync(3),
+                TotalCars = await _carService.GetTotalCarsCountAsync(),
+                TotalReviews = await _reviewService.GetTotalReviewsCountAsync(),
+                Classes = await _carService.GetAllClassesAsync()
+            };
+
+            viewModel.LatestCars = viewModel.LatestCars.Take(6);
+
+            return View(viewModel);
+        }
+
+        public IActionResult About()
         {
             return View();
         }
