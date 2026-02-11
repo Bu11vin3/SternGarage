@@ -1,8 +1,83 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@using MercedesBlog.ViewModels
+@model HomeViewModel
+@{
+    ViewData["Title"] = "Начало";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">SternGarage</h1>
+        <p class="lead text-muted">
+            Света на Mercedes-Benz в България. Разгледайте модели, 
+            прочетете отзиви от собственици и намерете перфектния автомобил.
+        </p>
+        <div class="d-flex gap-3 justify-content-center">
+            <a asp-controller="Cars" asp-action="Index" class="btn btn-dark btn-lg">
+                Разгледай автомобилите
+            </a>
+            <a asp-controller="Cars" asp-action="Create" class="btn btn-outline-dark btn-lg">
+                Добави автомобил
+            </a>
+        </div>
+    </div>
 </div>
+
+<section class="py-4 bg-light">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-4 mb-3">
+                <h2 class="fw-bold">@Model.TotalCars</h2>
+                <p class="text-muted">Автомобила в каталога</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h2 class="fw-bold">@Model.TotalReviews</h2>
+                <p class="text-muted">Отзива от собственици</p>
+            </div>
+            <div class="col-md-4">
+                <h2 class="fw-bold">@Model.Classes.Count()</h2>
+                <p class="text-muted">Класа автомобили</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-4">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold">Последно добавени</h2>
+            <a asp-controller="Cars" asp-action="Index" class="btn btn-outline-dark btn-sm">
+                Виж всички
+            </a>
+        </div>
+        <div class="row g-4">
+            @foreach (var car in Model.LatestCars)
+            {
+                <div class="col-md-6 col-lg-4">
+                    @await Html.PartialAsync("_CarCard", car)
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+@if (Model.LatestReviews.Any())
+{
+    <section class="py-4 bg-light">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="fw-bold">Последни отзиви</h2>
+                <a asp-controller="Reviews" asp-action="Index" class="btn btn-outline-dark btn-sm">
+                    Виж всички
+                </a>
+            </div>
+            <div class="row g-4">
+                @foreach (var review in Model.LatestReviews)
+                {
+                    <div class="col-lg-4">
+                        @await Html.PartialAsync("_ReviewCard", review)
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
