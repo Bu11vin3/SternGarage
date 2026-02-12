@@ -1,6 +1,6 @@
-using MercedesBlog.Models;
+using SternGarage.Models;
 
-namespace MercedesBlog.ViewModels
+namespace SternGarage.ViewModels
 {
     public class HomeViewModel
     {

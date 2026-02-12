@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using static MercedesBlog.Common.ValidationConstants;
+using static SternGarage.Common.ValidationConstants;
 
-namespace MercedesBlog.ViewModels
+namespace SternGarage.ViewModels
 {
     public class CarFormViewModel
     {

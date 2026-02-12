@@ -1,4 +1,4 @@
-namespace MercedesBlog.Common
+namespace SternGarage.Common
 {
     public static class ValidationConstants
     {

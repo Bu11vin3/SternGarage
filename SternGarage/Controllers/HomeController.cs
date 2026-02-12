@@ -1,12 +1,12 @@
-using MercedesBlog.Models;
-using MercedesBlog.Services.Contracts;
-using MercedesBlog.ViewModels;
+using SternGarage.Models;
+using SternGarage.Services.Contracts;
+using SternGarage.ViewModels;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using SternGarage.Models;
 using System.Diagnostics;
 
-namespace MercedesBlog.Controllers
+namespace SternGarage.Controllers
 {
     public class HomeController : Controller
     {

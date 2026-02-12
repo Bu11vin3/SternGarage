@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using MercedesBlog.Data;
-using MercedesBlog.Models;
-using MercedesBlog.Services.Contracts;
+using SternGarage.Data;
+using SternGarage.Models;
+using SternGarage.Services.Contracts;
 
-namespace MercedesBlog.Services
+namespace SternGarage.Services
 {
     public class ReviewService : IReviewService
     {

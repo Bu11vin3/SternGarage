@@ -1,7 +1,7 @@
-using MercedesBlog.Models;
+using SternGarage.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace MercedesBlog.Services.Contracts
+namespace SternGarage.Services.Contracts
 {
     public interface IReviewService
     {

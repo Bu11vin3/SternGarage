@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using MercedesBlog.Models;
-using MercedesBlog.ViewModels;
-using MercedesBlog.Services.Contracts;
+using SternGarage.Models;
+using SternGarage.ViewModels;
+using SternGarage.Services.Contracts;
 
-namespace MercedesBlog.Controllers
+namespace SternGarage.Controllers
 {
     public class CarsController : Controller
     {
