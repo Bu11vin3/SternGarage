@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using static MercedesBlog.Common.ValidationConstants;
+using static SternGarage.Common.ValidationConstants;
 
-namespace MercedesBlog.Models
+namespace SternGarage.Models
 {
     public class CarClass
     {
