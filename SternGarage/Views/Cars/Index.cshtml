@@ -1,0 +1,81 @@
+@using SternGarage.Models
+@model IEnumerable<Car>
+@{
+    ViewData["Title"] = "Автомобили";
+    var classes = ViewBag.Classes as IEnumerable<CarClass>;
+    var currentClassId = ViewBag.CurrentClassId as int?;
+    var currentSearchTerm = ViewBag.CurrentSearchTerm as string;
+    var currentSortBy = ViewBag.CurrentSortBy as string;
+}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Автомобили Mercedes-Benz</h2>
+        <a asp-action="Create" class="btn btn-dark">Добави автомобил</a>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label">Търсене</label>
+                    <input type="text" name="searchTerm" class="form-control" 
+                           placeholder="Търси по модел..." value="@currentSearchTerm">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Клас</label>
+                    <select name="classId" class="form-select">
+                        <option value="">Всички класове</option>
+                        @if (classes != null)
+                        {
+                            @foreach (var c in classes)
+                            {
+                                <option value="@c.Id" selected="@(currentClassId == c.Id)">@c.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Сортиране</label>
+                    <select name="sortBy" class="form-select">
+                        <option value="" selected="@(string.IsNullOrEmpty(currentSortBy))">Най-нови</option>
+                        <option value="price_asc" selected="@(currentSortBy == "price_asc")">Цена ↑</option>
+                        <option value="price_desc" selected="@(currentSortBy == "price_desc")">Цена ↓</option>
+                        <option value="year_desc" selected="@(currentSortBy == "year_desc")">Година ↓</option>
+                        <option value="year_asc" selected="@(currentSortBy == "year_asc")">Година ↑</option>
+                        <option value="power_desc" selected="@(currentSortBy == "power_desc")">Мощност ↓</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-dark w-100">Филтрирай</button>
+                </div>
+            </form>
+            @if (!string.IsNullOrEmpty(currentSearchTerm) || currentClassId.HasValue)
+            {
+                <div class="mt-2">
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-sm">Изчисти филтрите</a>
+                </div>
+            }
+        </div>
+    </div>
+
+    @if (Model.Any())
+    {
+        <div class="row g-4">
+            @foreach (var car in Model)
+            {
+                <div class="col-md-6 col-lg-4">
+                    @await Html.PartialAsync("_CarCard", car)
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <h4>Няма намерени автомобили</h4>
+            <p class="text-muted">Опитайте с различни филтри или добавете нов автомобил</p>
+            <a asp-action="Create" class="btn btn-dark">Добави автомобил</a>
+        </div>
+    }
+</div>
