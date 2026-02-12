@@ -1,0 +1,78 @@
+@using SternGarage.ViewModels
+@model CarFormViewModel
+@{
+    ViewData["Title"] = "Добави автомобил";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Добави нов автомобил</h2>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                <div class="row g-3">
+                    <div class="col-md-8">
+                        <label asp-for="Model" class="form-label"></label>
+                        <input asp-for="Model" class="form-control" placeholder="напр. Mercedes-AMG C 63">
+                        <span asp-validation-for="Model" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label asp-for="Year" class="form-label"></label>
+                        <input asp-for="Year" class="form-control" type="number">
+                        <span asp-validation-for="Year" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="ClassId" class="form-label"></label>
+                        <select asp-for="ClassId" asp-items="Model.Classes" class="form-select">
+                            <option value="">-- Изберете клас --</option>
+                        </select>
+                        <span asp-validation-for="ClassId" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="EngineType" class="form-label"></label>
+                        <input asp-for="EngineType" class="form-control" placeholder="напр. 2.0L Turbo Бензин">
+                        <span asp-validation-for="EngineType" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Horsepower" class="form-label"></label>
+                        <input asp-for="Horsepower" class="form-control" type="number">
+                        <span asp-validation-for="Horsepower" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Price" class="form-label"></label>
+                        <input asp-for="Price" class="form-control" type="number" step="500">
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="ImageUrl" class="form-label"></label>
+                        <input asp-for="ImageUrl" class="form-control" placeholder="https://example.com/image.jpg">
+                        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="Description" class="form-label"></label>
+                        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mt-4 d-flex gap-2">
+                    <button type="submit" class="btn btn-dark">Добави</button>
+                    <a asp-action="Index" class="btn btn-secondary">Отказ</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
