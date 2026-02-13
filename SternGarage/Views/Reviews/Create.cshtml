@@ -1,0 +1,66 @@
+﻿@model Review
+@{
+    ViewData["Title"] = "Напиши отзив";
+    var cars = ViewBag.Cars as IEnumerable<SelectListItem>;
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Напишете отзив</h2>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                <div class="mb-3">
+                    <label asp-for="CarId" class="form-label"></label>
+                    <select asp-for="CarId" asp-items="cars" class="form-select">
+                        <option value="">-- Изберете автомобил --</option>
+                    </select>
+                    <span asp-validation-for="CarId" class="text-danger"></span>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="AuthorName" class="form-label"></label>
+                        <input asp-for="AuthorName" class="form-control" placeholder="Вашето име">
+                        <span asp-validation-for="AuthorName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Rating" class="form-label"></label>
+                        <select asp-for="Rating" class="form-select">
+                            <option value="">-- Оценка --</option>
+                            <option value="5">5 - Отлично</option>
+                            <option value="4">4 - Много добро</option>
+                            <option value="3">3 - Добро</option>
+                            <option value="2">2 - Средно</option>
+                            <option value="1">1 - Слабо</option>
+                        </select>
+                        <span asp-validation-for="Rating" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label"></label>
+                    <input asp-for="Title" class="form-control" placeholder="Заглавие на отзива">
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Content" class="form-label"></label>
+                    <textarea asp-for="Content" class="form-control" rows="5"></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-dark">Публикувай</button>
+                    <a asp-action="Index" class="btn btn-secondary">Отказ</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
