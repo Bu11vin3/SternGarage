@@ -1,0 +1,32 @@
+﻿@model Review
+@{
+    ViewData["Title"] = "Изтрий отзив";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <h2 class="mb-4">Изтриване на отзив</h2>
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5>@Model.Title</h5>
+                    <p class="text-muted">@Model.Content</p>
+                    <small class="text-muted">@Model.AuthorName | @Model.Car?.Model</small>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <strong>Внимание!</strong> Това действие е необратимо.
+            </div>
+
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="Id" />
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-danger">Изтрий</button>
+                    <a asp-controller="Cars" asp-action="Details" asp-route-id="@Model.CarId" class="btn btn-secondary">Отказ</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
