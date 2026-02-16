@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SternGarage.Data;
 using SternGarage.Models;
 using SternGarage.Services;
 using SternGarage.Services.Contracts;
+using SternGarages.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
