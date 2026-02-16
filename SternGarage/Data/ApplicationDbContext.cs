@@ -1,6 +1,5 @@
 ﻿using SternGarage.Models;
 using Microsoft.EntityFrameworkCore;
-using SternGarage.Models;
 using System;
 
 namespace SternGarages.Data
