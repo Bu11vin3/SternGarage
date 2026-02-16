@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SternGarage.Data;
 using SternGarage.Models;
 using SternGarage.Services.Contracts;
+using SternGarages.Data;
 
 namespace SternGarage.Services
 {
