@@ -1,10 +1,11 @@
-﻿using SternGarage.Models;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SternGarage.Models;
 using System;
 
 namespace SternGarages.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -115,7 +116,7 @@ namespace SternGarages.Data
                     Horsepower = 831,
                     EngineType = "4.0L V8 Biturbo + Електромотор (PHEV)",
                     Price = 215000,
-                    Description = "Един от най-мощните сериини AMG! 4-вратото купе има 4.0L V8 Biturbo който прави 630 к.с. + електромотор който добавя още 201 к.с. за обща мощност от 831 к.с. и над 1000 Nm. 0-100 за 2.8 сек. Има Drift Mode и AMG RIDE CONTROL+ окачване.",
+                    Description = "Един от най-мощните сериини AMG! 4-вратото купе има 4.0L V8 Biturbo който прави 630 к.с. + електромотор който добавя още 201 к.с. за обща мощност от 831 к.с. и над 1000 Nm. 0-100 за 2.8 сек.",
                     ImageUrl = "/images/cars/amg-gt63s.jpg",
                 },
                 new Car
