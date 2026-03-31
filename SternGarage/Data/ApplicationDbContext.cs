@@ -15,6 +15,7 @@ namespace SternGarages.Data
         public DbSet<Car> Cars { get; set; }
         public DbSet<CarClass> CarClasses { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<Favorite> Favorites { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
