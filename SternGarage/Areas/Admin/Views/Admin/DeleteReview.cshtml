@@ -1,0 +1,43 @@
+@using SternGarage.Models
+@model Review
+@{
+    ViewData["Title"] = "Изтрий отзив";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <h2 class="mb-4">Потвърдете изтриването</h2>
+
+            <div class="card mb-3 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">@Model.Title</h5>
+                    @if (Model.Car != null)
+                    {
+                        <p class="text-muted small mb-2">Автомобил: <strong>@Model.Car.Model</strong></p>
+                    }
+                    <p class="text-muted small mb-2">Автор: @Model.AuthorName</p>
+                    <p class="card-text">@Model.Content</p>
+                    <span class="text-warning">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            @(i <= Model.Rating ? "★" : "☆")
+                        }
+                    </span>
+                </div>
+            </div>
+
+            <div class="alert alert-danger">
+                <strong>Внимание!</strong> Сигурни ли сте, че искате да изтриете този отзив? Действието е необратимо.
+            </div>
+
+            <form asp-action="DeleteReview" method="post">
+                <input type="hidden" asp-for="Id" />
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-danger">Изтрий</button>
+                    <a asp-action="Index" class="btn btn-secondary">Отказ</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
