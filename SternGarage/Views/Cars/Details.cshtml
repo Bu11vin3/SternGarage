@@ -20,7 +20,11 @@
                     <h2 class="fw-bold">@Model.Model</h2>
                 </div>
                 <div>
-                    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger btn-sm">Изтрий</a>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger btn-sm">Изтрий</a>
+                    }
+
                 </div>
             </div>
 
@@ -91,10 +95,14 @@
                     <p>@review.Content</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <small class="text-muted">@review.AuthorName | @review.CreatedAt.ToString("dd.MM.yyyy")</small>
-                        <div>
-                            <a asp-controller="Reviews" asp-action="Edit" asp-route-id="@review.Id" class="btn btn-outline-secondary btn-sm">Редактирай</a>
-                            <a asp-controller="Reviews" asp-action="Delete" asp-route-id="@review.Id" class="btn btn-outline-danger btn-sm">Изтрий</a>
-                        </div>
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <div>
+                                <a asp-controller="Reviews" asp-action="Edit" asp-route-id="@review.Id" class="btn btn-outline-secondary btn-sm">Редактирай</a>
+                                <a asp-controller="Reviews" asp-action="Delete" asp-route-id="@review.Id" class="btn btn-outline-danger btn-sm">Изтрий</a>
+                            </div>
+                        }
+
                     </div>
                 </div>
             </div>

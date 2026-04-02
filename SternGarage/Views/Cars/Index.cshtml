@@ -11,7 +11,11 @@
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-bold">Автомобили Mercedes-Benz</h2>
-        <a asp-action="Create" class="btn btn-dark">Добави автомобил</a>
+        @if (User.IsInRole("Administrator"))
+        {
+            <a asp-action="Create" class="btn btn-dark">+ Добави автомобил</a>
+        }
+
     </div>
 
     <div class="card mb-4">
