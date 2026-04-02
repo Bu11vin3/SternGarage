@@ -24,7 +24,7 @@ namespace SternGarage.Controllers
         [HttpGet]
         public async Task<IActionResult> Create(int? carId)
         {
-            ViewBag.Cars = await _reviewService.GetCarSelectListAsync();
+            ViewBag.Cars = await _reviewService.GetAllReviewsAsync();
 
             var review = new Review { };
             if (carId.HasValue)
