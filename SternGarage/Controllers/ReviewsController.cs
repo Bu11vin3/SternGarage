@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SternGarage.Models;
 using SternGarage.Services.Contracts;
@@ -22,9 +23,10 @@ namespace SternGarage.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Create(int? carId)
         {
-            ViewBag.Cars = await _reviewService.GetAllReviewsAsync();
+            ViewBag.Cars = await _reviewService.GetCarSelectListAsync();
 
             var review = new Review { };
             if (carId.HasValue)
@@ -36,6 +38,7 @@ namespace SternGarage.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Review review)
         {
@@ -107,6 +110,7 @@ namespace SternGarage.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
 
@@ -126,6 +130,7 @@ namespace SternGarage.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Administrator")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SternGarage.Models;
 using SternGarage.ViewModels;
@@ -46,6 +47,7 @@ namespace SternGarage.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Create()
         {
             var viewModel = await _carService.GetCarForCreateAsync();
@@ -53,6 +55,7 @@ namespace SternGarage.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CarFormViewModel viewModel)
         {
@@ -68,6 +71,7 @@ namespace SternGarage.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -85,6 +89,7 @@ namespace SternGarage.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Administrator")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
