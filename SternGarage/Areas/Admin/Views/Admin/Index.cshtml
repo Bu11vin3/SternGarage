@@ -1,0 +1,102 @@
+@using SternGarage.Models
+@model IEnumerable<Review>
+@{
+    ViewData["Title"] = "Административен панел";
+    int totalCars = ViewBag.TotalCars;
+    int totalReviews = ViewBag.TotalReviews;
+}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-0">Административен панел</h2>
+            <small class="text-muted">Управление на съдържанието</small>
+        </div>
+        <a asp-controller="Cars" asp-action="Create" asp-area="" class="btn btn-dark">
+            + Добави автомобил
+        </a>
+    </div>
+
+    <div class="row g-3 mb-5">
+        <div class="col-md-6">
+            <div class="card text-center shadow-sm">
+                <div class="card-body py-4">
+                    <h1 class="display-4 fw-bold mb-0">@totalCars</h1>
+                    <p class="text-muted mb-0">Автомобила в базата</p>
+                    <a asp-controller="Cars" asp-action="Index" asp-area="" class="btn btn-outline-dark btn-sm mt-3">
+                        Виж всички
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card text-center shadow-sm">
+                <div class="card-body py-4">
+                    <h1 class="display-4 fw-bold mb-0">@totalReviews</h1>
+                    <p class="text-muted mb-0">Отзива в базата</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h4 class="fw-bold mb-3">Всички отзиви</h4>
+
+    @if (Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Автомобил</th>
+                        <th>Заглавие</th>
+                        <th>Автор</th>
+                        <th>Оценка</th>
+                        <th>Дата</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var review in Model)
+                    {
+                        <tr>
+                            <td class="text-muted small">@review.Id</td>
+                            <td>
+                                @if (review.Car != null)
+                                {
+                                    <a asp-controller="Cars" asp-action="Details" asp-route-id="@review.CarId" asp-area=""
+                                       class="text-decoration-none fw-semibold">
+                                        @review.Car.Model
+                                    </a>
+                                }
+                            </td>
+                            <td>@review.Title</td>
+                            <td>@review.AuthorName</td>
+                            <td>
+                                <span class="text-warning">
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        @(i <= review.Rating ? "★" : "☆")
+                                    }
+                                </span>
+                            </td>
+                            <td class="text-muted small">@review.CreatedAt.ToString("dd.MM.yyyy")</td>
+                            <td>
+                                <a asp-action="DeleteReview" asp-route-id="@review.Id"
+                                   class="btn btn-outline-danger btn-sm">
+                                    Изтрий
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-4 text-muted">
+            <p>Няма отзиви в момента.</p>
+        </div>
+    }
+</div>
