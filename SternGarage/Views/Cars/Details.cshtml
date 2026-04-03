@@ -22,6 +22,7 @@
                 <div>
                     @if (User.IsInRole("Administrator"))
                     {
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-secondary btn-sm">Редактирай</a>
                         <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger btn-sm">Изтрий</a>
                     }
 
