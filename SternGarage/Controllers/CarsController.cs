@@ -16,9 +16,10 @@ namespace SternGarage.Controllers
         }
 
        [HttpGet]
-        public async Task<IActionResult> Index(int? classId, string? searchTerm, string? sortBy)
+        public async Task<IActionResult> Index(int? classId, string? searchTerm, string? sortBy, int page = 1)
         {
-            var cars = await _carService.GetAllCarsAsync(classId, searchTerm, sortBy);
+            int pageSize = 6;
+            var cars = await _carService.GetPaginatedCarsAsync(classId, searchTerm, sortBy, page, pageSize);
 
             ViewBag.Classes = await _carService.GetAllClassesAsync();
             ViewBag.CurrentClassId = classId;
