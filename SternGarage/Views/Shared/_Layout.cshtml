@@ -32,15 +32,6 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Home" asp-action="About">За нас</a>
                         </li>
-                        @if (User.IsInRole("Administrator"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-warning fw-semibold"
-                                       asp-area="Admin" asp-controller="Admin" asp-action="Index">
-                                    ⚙ Админ панел
-                                </a>
-                            </li>
-                        }
                     </ul>
                     <div class="d-flex align-items-center gap-2">
                         @if (User.IsInRole("Administrator"))
