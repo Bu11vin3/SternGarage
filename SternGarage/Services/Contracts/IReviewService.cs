@@ -1,4 +1,5 @@
 using SternGarage.Models;
+using SternGarage.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SternGarage.Services.Contracts
@@ -6,6 +7,8 @@ namespace SternGarage.Services.Contracts
     public interface IReviewService
     {
         Task<IEnumerable<Review>> GetAllReviewsAsync();
+
+        Task<PaginatedList<Review>> GetPaginatedReviewsAsync(int pageIndex, int pageSize);
 
         Task<IEnumerable<Review>> GetLatestReviewsAsync(int count);
 

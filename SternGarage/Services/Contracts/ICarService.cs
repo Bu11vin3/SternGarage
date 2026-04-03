@@ -8,6 +8,8 @@ namespace SternGarage.Services.Contracts
     {
         Task<IEnumerable<Car>> GetAllCarsAsync(int? classId, string? searchTerm, string? sortBy);
 
+        Task<PaginatedList<Car>> GetPaginatedCarsAsync(int? classId, string? searchTerm, string? sortBy, int pageIndex, int pageSize);
+
         Task<CarDetailsViewModel?> GetCarDetailsByIdAsync(int id);
 
         Task<CarFormViewModel> GetCarForCreateAsync();
