@@ -118,6 +118,50 @@ namespace SternGarage.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task<CarFormViewModel?> GetCarForEditAsync(int id)
+        {
+            var car = await _context.Cars.FindAsync(id);
+
+            if (car == null)
+            {
+                return null;
+            }
+
+            return new CarFormViewModel
+            {
+                Id = car.Id,
+                Model = car.Model,
+                Year = car.Year,
+                ClassId = car.ClassId,
+                Horsepower = car.Horsepower,
+                EngineType = car.EngineType,
+                Price = car.Price,
+                Description = car.Description,
+                ImageUrl = car.ImageUrl,
+                Classes = await GetClassSelectListAsync()
+            };
+        }
+
+        public async Task UpdateCarAsync(CarFormViewModel model)
+        {
+            var car = await _context.Cars.FindAsync(model.Id);
+
+            if (car != null)
+            {
+                car.Model = model.Model;
+                car.Year = model.Year;
+                car.ClassId = model.ClassId;
+                car.Horsepower = model.Horsepower;
+                car.EngineType = model.EngineType;
+                car.Price = model.Price;
+                car.Description = model.Description;
+                car.ImageUrl = model.ImageUrl;
+                car.UpdatedAt = DateTime.UtcNow;
+
+                await _context.SaveChangesAsync();
+            }
+        }
+
         public async Task<Car?> GetCarForDeleteAsync(int id)
         {
             return await _context.Cars

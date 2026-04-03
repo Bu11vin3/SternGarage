@@ -18,6 +18,10 @@ namespace SternGarage.Services.Contracts
 
         Task DeleteCarAsync(int id);
 
+        Task<CarFormViewModel?> GetCarForEditAsync(int id);
+
+        Task UpdateCarAsync(CarFormViewModel model);
+
         Task<bool> CarExistsAsync(int id);
 
         Task<IEnumerable<SelectListItem>> GetClassSelectListAsync();
