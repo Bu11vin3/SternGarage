@@ -12,7 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+// From here change to your connection string in appsettings.json for mac or windows
+var connectionString = builder.Configuration.GetConnectionString("MacConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -58,6 +59,24 @@ using (var scope = app.Services.CreateScope())
         await userManager.CreateAsync(user, adminPassword);
         await userManager.AddToRoleAsync(user, "Administrator");
     }
+
+    string testEmail = "test@test.com";
+    string testPassword = "Test123!";
+
+    var testUser = await userManager.FindByEmailAsync(testEmail);
+
+    if (testUser == null)
+    {
+        var newUser = new ApplicationUser
+        {
+            UserName = testEmail,
+            Email = testEmail,
+            EmailConfirmed = true
+        };
+
+        await userManager.CreateAsync(newUser, testPassword);
+        await userManager.AddToRoleAsync(newUser, "User");
+    }
 }
 
 // Pipeline
@@ -70,6 +89,8 @@ else
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
+
+app.UseStatusCodePagesWithReExecute("/Home/Error/{0}");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
