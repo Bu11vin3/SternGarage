@@ -72,6 +72,45 @@ namespace SternGarage.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = await _carService.GetCarForEditAsync(id.Value);
+            if (viewModel == null)
+            {
+                return NotFound();
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Administrator")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, CarFormViewModel viewModel)
+        {
+            if (id != viewModel.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                await _carService.UpdateCarAsync(viewModel);
+                TempData["SuccessMessage"] = "Автомобилът е редактиран!";
+                return RedirectToAction(nameof(Details), new { id = viewModel.Id });
+            }
+
+            viewModel.Classes = await _carService.GetClassSelectListAsync();
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
