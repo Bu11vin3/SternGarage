@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Review>
+@using SternGarage.Models
+@using SternGarage.ViewModels
+@model PaginatedList<Review>
 @{
     ViewData["Title"] = "Отзиви";
 }
@@ -14,6 +16,29 @@
         @foreach (var review in Model)
         {
         @await Html.PartialAsync("_ReviewCard", review)
+        }
+
+        @if (Model.TotalPages > 1)
+        {
+            <nav class="mt-4">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item @(!Model.HasPreviousPage ? "disabled" : "")">
+                        <a class="page-link" asp-action="Index"
+                           asp-route-page="@(Model.PageIndex - 1)">Назад</a>
+                    </li>
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        <li class="page-item @(i == Model.PageIndex ? "active" : "")">
+                            <a class="page-link" asp-action="Index"
+                               asp-route-page="@i">@i</a>
+                        </li>
+                    }
+                    <li class="page-item @(!Model.HasNextPage ? "disabled" : "")">
+                        <a class="page-link" asp-action="Index"
+                           asp-route-page="@(Model.PageIndex + 1)">Напред</a>
+                    </li>
+                </ul>
+            </nav>
         }
     }
     else

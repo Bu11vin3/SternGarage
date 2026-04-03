@@ -1,5 +1,6 @@
 @using SternGarage.Models
-@model IEnumerable<Car>
+@using SternGarage.ViewModels
+@model PaginatedList<Car>
 @{
     ViewData["Title"] = "Автомобили";
     var classes = ViewBag.Classes as IEnumerable<CarClass>;
@@ -23,7 +24,7 @@
             <form method="get" class="row g-3 align-items-end">
                 <div class="col-md-4">
                     <label class="form-label">Търсене</label>
-                    <input type="text" name="searchTerm" class="form-control" 
+                    <input type="text" name="searchTerm" class="form-control"
                            placeholder="Търси по модел..." value="@currentSearchTerm">
                 </div>
                 <div class="col-md-3">
@@ -73,6 +74,38 @@
                 </div>
             }
         </div>
+
+        @if (Model.TotalPages > 1)
+        {
+            <nav class="mt-4">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item @(!Model.HasPreviousPage ? "disabled" : "")">
+                        <a class="page-link" asp-action="Index"
+                           asp-route-page="@(Model.PageIndex - 1)"
+                           asp-route-classId="@currentClassId"
+                           asp-route-searchTerm="@currentSearchTerm"
+                           asp-route-sortBy="@currentSortBy">Назад</a>
+                    </li>
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        <li class="page-item @(i == Model.PageIndex ? "active" : "")">
+                            <a class="page-link" asp-action="Index"
+                               asp-route-page="@i"
+                               asp-route-classId="@currentClassId"
+                               asp-route-searchTerm="@currentSearchTerm"
+                               asp-route-sortBy="@currentSortBy">@i</a>
+                        </li>
+                    }
+                    <li class="page-item @(!Model.HasNextPage ? "disabled" : "")">
+                        <a class="page-link" asp-action="Index"
+                           asp-route-page="@(Model.PageIndex + 1)"
+                           asp-route-classId="@currentClassId"
+                           asp-route-searchTerm="@currentSearchTerm"
+                           asp-route-sortBy="@currentSortBy">Напред</a>
+                    </li>
+                </ul>
+            </nav>
+        }
     }
     else
     {
