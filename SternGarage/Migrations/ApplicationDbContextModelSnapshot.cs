@@ -69,7 +69,7 @@ namespace SternGarage.Migrations
 
                     b.HasIndex("ClassId");
 
-                    b.ToTable("Cars");
+                    b.ToTable("Cars", (string)null);
 
                     b.HasData(
                         new
@@ -171,7 +171,7 @@ namespace SternGarage.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CarClasses");
+                    b.ToTable("CarClasses", (string)null);
 
                     b.HasData(
                         new
@@ -248,7 +248,7 @@ namespace SternGarage.Migrations
 
                     b.HasIndex("CarId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
 
                     b.HasData(
                         new
