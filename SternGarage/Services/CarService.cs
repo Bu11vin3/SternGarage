@@ -62,6 +62,52 @@ namespace SternGarage.Services
             return await query.ToListAsync();
         }
 
+        public async Task<PaginatedList<Car>> GetPaginatedCarsAsync(int? classId, string? searchTerm, string? sortBy, int pageIndex, int pageSize)
+        {
+            var query = _context.Cars
+                .Include(c => c.Class)
+                .Include(c => c.Reviews)
+                .AsQueryable();
+
+            if (classId.HasValue)
+            {
+                query = query.Where(c => c.ClassId == classId.Value);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                query = query.Where(c => c.Model.Contains(searchTerm) ||
+                                        (c.Description != null && c.Description.Contains(searchTerm)));
+            }
+
+            if (sortBy == "price_asc")
+            {
+                query = query.OrderBy(c => c.Price);
+            }
+            else if (sortBy == "price_desc")
+            {
+                query = query.OrderByDescending(c => c.Price);
+            }
+            else if (sortBy == "year_desc")
+            {
+                query = query.OrderByDescending(c => c.Year);
+            }
+            else if (sortBy == "year_asc")
+            {
+                query = query.OrderBy(c => c.Year);
+            }
+            else if (sortBy == "power_desc")
+            {
+                query = query.OrderByDescending(c => c.Horsepower);
+            }
+            else
+            {
+                query = query.OrderByDescending(c => c.Id);
+            }
+
+            return await PaginatedList<Car>.CreateAsync(query, pageIndex, pageSize);
+        }
+
         public async Task<CarDetailsViewModel?> GetCarDetailsByIdAsync(int id)
         {
             var car = await _context.Cars

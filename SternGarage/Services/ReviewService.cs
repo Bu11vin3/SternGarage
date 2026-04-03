@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SternGarage.Models;
+using SternGarage.ViewModels;
 using SternGarage.Services.Contracts;
 using SternGarages.Data;
 
@@ -21,6 +22,15 @@ namespace SternGarage.Services
                 .Include(r => r.Car)
                 .OrderByDescending(r => r.CreatedAt)
                 .ToListAsync();
+        }
+
+        public async Task<PaginatedList<Review>> GetPaginatedReviewsAsync(int pageIndex, int pageSize)
+        {
+            var query = _context.Reviews
+                .Include(r => r.Car)
+                .OrderByDescending(r => r.CreatedAt);
+
+            return await PaginatedList<Review>.CreateAsync(query, pageIndex, pageSize);
         }
 
         public async Task<IEnumerable<Review>> GetLatestReviewsAsync(int count)
