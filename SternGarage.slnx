@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="SternGarage/SternGarage.csproj" />
+  <Project Path="SternGarage.Tests/SternGarage.Tests.csproj" />
 </Solution>
